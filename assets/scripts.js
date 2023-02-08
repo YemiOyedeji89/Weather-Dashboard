@@ -1,5 +1,6 @@
-var searchInput = $("#search-input");
 
+
+var searchInput = $("#search-input");
 ///SAVING THE SEARCH INPUT IN AN ARRAY
 var searches = JSON.parse(localStorage.getItem("city")) || [];
 
@@ -161,7 +162,7 @@ function cityWeatherForecast(mySearch){
     function buildCordUrl(mySearch){
 
         //BASE QUERY URL 
-        var queryURL = "http://api.openweathermap.org/geo/1.0/direct?";
+        var queryURL = "https://api.openweathermap.org/geo/1.0/direct?";
     
         //STORING THE QUERY PARAMATER IN A VARIABLE
         queryParam = {"appid":"d6ca1a88a6b8972287493346d6dfc71c"};
