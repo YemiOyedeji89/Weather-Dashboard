@@ -17,10 +17,19 @@ function cityWeatherForecast(mySearch){
    
    var today = moment().format("DD/MM/YYYY");
    var foreCastday1 = moment().add(1, "days").format("YYYY-MM-DD 12:00:00");
+   var foreCastday1Am = moment().add(1, "days").format("YYYY-MM-DD 09:00:00");
+
    var foreCastday2 = moment().add(2, "days").format("YYYY-MM-DD 12:00:00");
+   var foreCastday2Am = moment().add(2, "days").format("YYYY-MM-DD 09:00:00");
+
    var foreCastday3 = moment().add(3, "days").format("YYYY-MM-DD 12:00:00");
+   var foreCastday3Am = moment().add(3, "days").format("YYYY-MM-DD 09:00:00");
+
    var foreCastday4 = moment().add(4, "days").format("YYYY-MM-DD 12:00:00");
+   var foreCastday4Am = moment().add(4, "days").format("YYYY-MM-DD 09:00:00");
+
    var foreCastday5 = moment().add(5, "days").format("YYYY-MM-DD 12:00:00");
+   var foreCastday5Am = moment().add(5, "days").format("YYYY-MM-DD 09:00:00");
 
   ///SAVING THE LONGITUDE AND LATITUDE INTO OF THE SEARCHED CITY INTO A VARIABLE OBJECT
     const cityLongLat = {
@@ -54,7 +63,7 @@ function cityWeatherForecast(mySearch){
         url:currentQueryURL,
         method: "GET"
         }).then(function(data){
-
+            
             //DISPLAYING THE CURRENT WEATHER
             var todayWeatherData = data;
             var currentDiv = $("<div>").addClass("current");
@@ -67,8 +76,6 @@ function cityWeatherForecast(mySearch){
             ///DISPLAYING THE CURRENT WEATHER ON THE WEBPAGE
             $("#today").prepend(weatherNow);
          
-
-            
             ///AJAX CALL FOR THE FORECAST
             var forcastDataURL = buildForcastDataUrl();
            
@@ -84,7 +91,7 @@ function cityWeatherForecast(mySearch){
                 
                     var days = forecastFiveDays[f].dt_txt
                     
-                    if(days == foreCastday1){
+                    if((days == foreCastday1) || (forecastFiveDays.dt_txt == foreCastday1Am)){
 
                         var foreCastCards = $("<div>").addClass("fore-cast");
                         var pDate1 = $("<h5>").text(moment().add(1, "days").format("DD/MM/YYYY"));
@@ -95,7 +102,7 @@ function cityWeatherForecast(mySearch){
 
                         $("#forecast").append(ForeCast1);
                     }
-                    if(days == foreCastday2){
+                    if((days == foreCastday2) || (forecastFiveDays.dt_txt == foreCastday2Am)){
 
                         var foreCastCards2 = $("<div>").addClass("fore-cast");
                         var pDate2 = $("<h5>").text(moment().add(2, "days").format("DD/MM/YYYY"));
@@ -106,8 +113,7 @@ function cityWeatherForecast(mySearch){
 
                         $("#forecast").append(ForeCast2);
                     }
-
-                    if(days == foreCastday3){
+                    if((days == foreCastday3 )|| (forecastFiveDays.dt_txt == foreCastday3Am)){
                         
                         var foreCastCards3 = $("<div>").addClass("fore-cast");
                         var pDate3 = $("<h5>").text(moment().add(3, "days").format("DD/MM/YYYY"));
@@ -118,8 +124,7 @@ function cityWeatherForecast(mySearch){
 
                         $("#forecast").append(ForeCast3);
                     }
-
-                    if(days == foreCastday4){
+                    if((days == foreCastday4) || (forecastFiveDays.dt_txt == foreCastday4Am)){
                     
                         var foreCastCards4 = $("<div>").addClass("fore-cast");
                         var pDate4 = $("<h5>").text(moment().add(4, "days").format("DD/MM/YYYY"));
@@ -130,8 +135,8 @@ function cityWeatherForecast(mySearch){
 
                         $("#forecast").append(ForeCast4);
                     }
-                    if(days == foreCastday5){
-                        //console.log(forcasteData);
+                    if((days == foreCastday5) || (forecastFiveDays.dt_txt == foreCastday5Am)){
+                        
                         var foreCastCards5 = $("<div>").addClass("fore-cast");
                         var pDate5 = $("<h5>").text(moment().add(5, "days").format("DD/MM/YYYY"));
                         var pTemp5 = $("<p>").text("Temp: " + parseInt(forecastFiveDays[f].main.temp) + "C");
@@ -140,14 +145,11 @@ function cityWeatherForecast(mySearch){
                         var ForeCast5 = foreCastCards5.append(pDate5,pTemp5,pWind5, pHumidity5);
 
                         $("#forecast").append(ForeCast5);
-
                     }
                 };
-     
             }); 
 
         }); 
-        
     }); 
     ///CLEAR CURRENT WEATHER DETAILS TO REPLACE WITH NEW SEARCH INPUT
     $(".current").remove();
@@ -155,10 +157,6 @@ function cityWeatherForecast(mySearch){
     ///CLEAR WEATHER FORECAST DETAILS TO REPLACE WITH NEW SEARCH INPUT
     $(".fore-cast").remove();
     
-
-    ///CLEAR THE HISTORY AND UPDATE SEARCH 
-   // clear();
-
     /// FUNCTION TO BUILD THE URL FOR THE SEARCHED CITY NEEDED FOR THE AJAX CALL FOR THE CITY COORDINATES
     function buildCordUrl(mySearch){
 
@@ -191,6 +189,7 @@ function cityWeatherForecast(mySearch){
      queryParam1 = {"appid":"d6ca1a88a6b8972287493346d6dfc71c"};
      queryParam1.lat = cityLongLat.latitude;
      queryParam1.lon = cityLongLat.longitude;
+     queryParam1.cnt = 45;
      queryParam1.units = "metric";
      
      return forcastDataURL + $.param(queryParam1);
@@ -225,14 +224,10 @@ function saveSearches(mySearch){
            event.preventDefault();
 
             var mySearch = $(this).text();
-           
            cityWeatherForecast(mySearch);
         });   
-        
     } 
-
 }
-
 ///RETRIEVING SEARCH STORED TO THE LOCAL STORAGE
 var storedSearch = JSON.parse(localStorage.getItem("city"));
     
@@ -248,8 +243,6 @@ for(let i =0; i< storedSearch.length; i++){
        event.preventDefault();
 
         var mySearch = $(this).text();
-       
        cityWeatherForecast(mySearch);
     });   
-    
 } 
