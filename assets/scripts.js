@@ -1,7 +1,7 @@
 var searchInput = $("#search-input");
 
 ///SAVING THE SEARCH INPUT IN AN ARRAY
-var searches = [];
+var searches = JSON.parse(localStorage.getItem("city")) || [];
 
 
 ///ONCLICK OF THE SEARCH BUTTON
@@ -220,7 +220,7 @@ function saveSearches(mySearch){
         $searchBtn.append(storedSearch[i]);
         
         searchInput.val(" ") ;
-        
+                                                                                                                                                                                                                                                                                                                                           
         $searchBtn.on("click", function(event){
            event.preventDefault();
 
@@ -228,9 +228,28 @@ function saveSearches(mySearch){
            
            cityWeatherForecast(mySearch);
         });   
-
+        
     } 
 
 }
 
+///RETRIEVING SEARCH STORED TO THE LOCAL STORAGE
+var storedSearch = JSON.parse(localStorage.getItem("city"));
+    
+///LOOPING THROUGH LOCAL STORAGE DATA, CREATE A BUTTON AND APPEND TO THE HISTORY SECTION
+for(let i =0; i< storedSearch.length; i++){
+    var $searchBtn = $("<button>").addClass("search-btn");
+    $("#history").append($searchBtn);
+    $searchBtn.append(storedSearch[i]);
+    
+    searchInput.val(" ") ;
+                                                                                                                                                                                                                                                                                                                                       
+    $searchBtn.on("click", function(event){
+       event.preventDefault();
 
+        var mySearch = $(this).text();
+       
+       cityWeatherForecast(mySearch);
+    });   
+    
+} 
