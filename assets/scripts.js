@@ -204,46 +204,41 @@ function clear(){
 //saveSearches(mySearch);
 function saveSearches(mySearch){
     clear();
+
     ///ADDING SEARCH INPUT TO A VARIABLE
+   if($.inArray(mySearch, searches) != -1){
+    persistSearchBtn();
+
+    return;
+
+   }else{
     searches.push(mySearch);
-    
-    ///STORING SEARCH INPUT TO THE LOCAL STORAGE
-    localStorage.setItem("city", JSON.stringify(searches));
+   };
+   
+   persistSearchBtn(); 
+}
+persistSearchBtn();
+
+///FUNCTION FOR GETTING ITEMS IN THE LOCAL STORAGE AND PERSIST ON THE PAGE
+
+function persistSearchBtn(){
 
     ///RETRIEVING SEARCH STORED TO THE LOCAL STORAGE
     var storedSearch = JSON.parse(localStorage.getItem("city"));
-    
+
     ///LOOPING THROUGH LOCAL STORAGE DATA, CREATE A BUTTON AND APPEND TO THE HISTORY SECTION
     for(let i =0; i< storedSearch.length; i++){
         var $searchBtn = $("<button>").addClass("search-btn");
         $("#history").append($searchBtn);
         $searchBtn.append(storedSearch[i]);
-        
+
         searchInput.val(" ") ;
-                                                                                                                                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                                                                                                            
         $searchBtn.on("click", function(event){
-           event.preventDefault();
+            event.preventDefault();
 
             var mySearch = $(this).text();
-           cityWeatherForecast(mySearch);
+            cityWeatherForecast(mySearch);
         });   
     } 
 }
-///RETRIEVING SEARCH STORED TO THE LOCAL STORAGE
-var storedSearch = JSON.parse(localStorage.getItem("city"));
-    
-///LOOPING THROUGH LOCAL STORAGE DATA, CREATE A BUTTON AND APPEND TO THE HISTORY SECTION
-for(let i =0; i< storedSearch.length; i++){
-    var $searchBtn = $("<button>").addClass("search-btn");
-    $("#history").append($searchBtn);
-    $searchBtn.append(storedSearch[i]);
-    
-    searchInput.val(" ") ;
-                                                                                                                                                                                                                                                                                                                                       
-    $searchBtn.on("click", function(event){
-       event.preventDefault();
-
-        var mySearch = $(this).text();
-       cityWeatherForecast(mySearch);
-    });   
-} 
