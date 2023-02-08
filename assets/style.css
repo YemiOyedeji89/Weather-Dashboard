@@ -1,0 +1,45 @@
+/* .fore-cast {
+background-color: rgb(7, 64, 88);
+
+}
+#forecast{
+    display: inline;
+    border: 5px;
+    border-style: solid;
+    
+}
+.fore-cast p{ 
+    font-size: 12pt;
+    color: white;
+}
+h4 {
+    font-size: 14pt;
+    color: white;
+}
+.current {
+    padding: 10px;
+    margin: 10px;
+    border-width: 5px;
+    background-color: lightgray;
+    border-style: solid;
+}
+
+ */
+ 
+ .current {
+    padding: 10px;
+    margin: 10px;
+    border-width: 5px;
+    border-style: solid;
+}
+
+.fore-cast { 
+    font-size: 12pt;
+    border-width: 3px;
+    border-style: solid;
+    border-color: black;
+    background-color: rgb(22, 71, 128);
+    color: white;
+    align-items: stretch;
+    justify-content: space-around;
+}
